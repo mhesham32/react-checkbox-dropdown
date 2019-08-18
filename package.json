@@ -15,8 +15,8 @@
     "clean": "nwb clean-module && nwb clean-demo",
     "prepublishOnly": "npm run build",
     "start": "nwb serve-react-demo",
-    "test": "nwb test-react",
-    "test:coverage": "nwb test-react --coverage",
+    "test": "jest --watch --no-cache",
+    "test:cover": "jest --coverage",
     "test:watch": "nwb test-react --server"
   },
   "dependencies": {},
@@ -24,15 +24,26 @@
     "react": "16.x"
   },
   "devDependencies": {
+    "@babel/core": "^7.5.5",
+    "@babel/preset-env": "^7.5.5",
+    "@testing-library/react": "^9.1.3",
+    "babel-jest": "^24.9.0",
+    "babel-preset-es2015": "^6.24.1",
+    "babel-preset-react": "^6.24.1",
+    "jest": "^24.9.0",
     "nwb": "0.23.x",
+    "proptypes": "^1.1.0",
     "react": "^16.9.0",
-    "react-dom": "^16.9.0"
+    "react-dom": "^16.9.0",
+    "react-test-renderer": "^16.9.0"
   },
   "author": "",
   "homepage": "",
   "license": "MIT",
   "repository": "",
   "keywords": [
-    "react-component"
+    "react-component",
+    "checkbox-react-dropdown-component",
+    "dropdown"
   ]
 }

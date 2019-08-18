@@ -1,15 +1,10 @@
-import React, {Component} from 'react'
-import {render} from 'react-dom'
+import React from 'react';
+import { render } from 'react-dom';
+import './style.css';
+import CheckboxDropdownComponent from '../../src';
 
-import Example from '../../src'
-
-class Demo extends Component {
-  render() {
-    return <div>
-      <h1>checkbox-dropdown-component Demo</h1>
-      <Example/>
-    </div>
-  }
+function Demo() {
+  return <CheckboxDropdownComponent />;
 }
 
-render(<Demo/>, document.querySelector('#demo'))
+render(<Demo />, document.querySelector('#demo'));

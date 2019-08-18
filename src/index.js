@@ -1,9 +1,8 @@
-import React, {Component} from 'react'
+import React from 'react';
+import types from 'prop-types';
 
-export default class extends Component {
-  render() {
-    return <div>
-      <h2>Welcome to React components</h2>
-    </div>
-  }
+function CheckboxDropdownComponent() {
+  return <h1>Hello!!</h1>;
 }
+
+export default CheckboxDropdownComponent;
