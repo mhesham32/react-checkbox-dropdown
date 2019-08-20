@@ -3,6 +3,12 @@ import PropTypes from 'prop-types';
 import upIcon from './assets/upIcon.svg';
 import downIcon from './assets/downIcon.svg';
 
+import createStyles from './createStyles';
+
+const styleObj = createStyles({
+  checkboxBody: 'hello'
+});
+
 function CheckboxDropdownComponent({
   options,
   value,
@@ -18,6 +24,7 @@ function CheckboxDropdownComponent({
   displayValues,
   closeAfterSelect
 }) {
+  console.log(styleObj);
   return (
     <div>
       <h1>Hello!! {closedIcon}</h1>
@@ -46,7 +53,12 @@ CheckboxDropdownComponent.propTypes = {
   onChange: PropTypes.func.isRequired,
   onOpen: PropTypes.func,
   onClose: PropTypes.func,
-  style: PropTypes.func,
+  style: PropTypes.objectOf({
+    checkboxBody: PropTypes.func,
+    icon: PropTypes.func,
+    activeOption: PropTypes.func,
+    options: PropTypes.func
+  }),
   openIcon: PropTypes.oneOfType([PropTypes.node, PropTypes.element]),
   closedIcon: PropTypes.oneOfType([PropTypes.node, PropTypes.element]),
   isStrict: PropTypes.bool,
@@ -58,7 +70,12 @@ CheckboxDropdownComponent.propTypes = {
 CheckboxDropdownComponent.defaultProps = {
   onOpen() {},
   onClose() {},
-  style() {},
+  style: {
+    checkboxBody: function() {},
+    icon: function() {},
+    activeOption: function() {},
+    options: function() {}
+  },
   openIcon: (
     <span>
       <img src={upIcon} alt="Arrow Icon pointing up" />
