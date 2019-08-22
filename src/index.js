@@ -1,13 +1,7 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import upIcon from './assets/upIcon.svg';
 import downIcon from './assets/downIcon.svg';
-
-import createStyles from './createStyles';
-
-const styleObj = createStyles({
-  checkboxBody: 'hello'
-});
 
 function CheckboxDropdownComponent({
   options,
@@ -18,16 +12,65 @@ function CheckboxDropdownComponent({
   onClose,
   style,
   openIcon,
-  closedIcon,
+  closeIcon,
   isStrict,
   onDeselectItem,
   displayValues,
   closeAfterSelect
 }) {
-  console.log(styleObj);
+  const [isOpen, setOpen] = useState(false);
+  const [isFocused, setFocus] = useState(false);
   return (
-    <div>
-      <h1>Hello!! {closedIcon}</h1>
+    <div
+      className="container"
+      style={{
+        width: '100%',
+        maxWidth: '570px',
+        border: `.5px solid ${isFocused ? '#377caf' : '#797474'}`,
+        overflow: 'hidden',
+        boxShadow: '0px 4px 4px rgba(0, 0, 0, 0.25)',
+        borderRadius: '5px',
+        backgroundColor: '#fff',
+        fontFamily:
+          'SFMono-Regular,Menlo,Monaco,Consolas,"Liberation Mono","Courier New",monospace'
+      }}
+    >
+      <button
+        className="display-text-button"
+        style={{
+          minHeight: '60px',
+          display: 'flex',
+          alignItems: 'center',
+          cursor: 'pointer',
+          width: '100%',
+          boxShadow: 'none',
+          backgroundColor: 'inherit',
+          borderRadius: '5px',
+          border: `.5px solid transparent`
+        }}
+        onClick={() => {
+          setOpen(!isOpen);
+        }}
+        onFocus={() => {
+          setFocus(true);
+        }}
+        onBlur={() => {
+          setFocus(false);
+        }}
+      >
+        <h3
+          className="display-text"
+          style={{ paddingLeft: '22px', fontSize: '18px', marginRight: 'auto' }}
+        >
+          {displayText}
+        </h3>
+        <div
+          className="icon"
+          style={{ height: '24px', width: '24px', marginRight: '10px' }}
+        >
+          {isOpen ? openIcon : closeIcon}
+        </div>
+      </button>
     </div>
   );
 }
@@ -60,7 +103,7 @@ CheckboxDropdownComponent.propTypes = {
     options: PropTypes.func
   }),
   openIcon: PropTypes.oneOfType([PropTypes.node, PropTypes.element]),
-  closedIcon: PropTypes.oneOfType([PropTypes.node, PropTypes.element]),
+  closeIcon: PropTypes.oneOfType([PropTypes.node, PropTypes.element]),
   isStrict: PropTypes.bool,
   onDeselectItem: PropTypes.func,
   displayValues: PropTypes.bool,
@@ -76,16 +119,8 @@ CheckboxDropdownComponent.defaultProps = {
     activeOption: function() {},
     options: function() {}
   },
-  openIcon: (
-    <span>
-      <img src={upIcon} alt="Arrow Icon pointing up" />
-    </span>
-  ),
-  closedIcon: (
-    <span>
-      <img src={downIcon} alt="Arrow Icon pointing down" />
-    </span>
-  ),
+  openIcon: <img src={upIcon} alt="Arrow Icon pointing up" />,
+  closeIcon: <img src={downIcon} alt="Arrow Icon pointing down" />,
   isStrict: true,
   onDeselectItem() {},
   displayValues: false,

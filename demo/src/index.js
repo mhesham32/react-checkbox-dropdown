@@ -4,7 +4,9 @@ import './style.css';
 import CheckboxDropdownComponent from '../../src';
 
 function Demo() {
-  return <CheckboxDropdownComponent />;
+  return (
+    <CheckboxDropdownComponent displayText="Choose your favourite character" />
+  );
 }
 
 render(<Demo />, document.querySelector('#demo'));
