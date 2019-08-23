@@ -1,7 +1,15 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import PropTypes from 'prop-types';
+
+import Options from './components/Options';
+import Option from './components/Option';
+import CheckBox from './components/Checkbox';
+
+import initOptions from './helpers/initOptions';
+import checkSelectedOption from './helpers/checkSelectedOption';
 import upIcon from './assets/upIcon.svg';
 import downIcon from './assets/downIcon.svg';
+import createStyles from './createStyles';
 
 function CheckboxDropdownComponent({
   options,
@@ -14,12 +22,14 @@ function CheckboxDropdownComponent({
   openIcon,
   closeIcon,
   isStrict,
-  onDeselectItem,
+  onDeselectOption,
   displayValues,
   closeAfterSelect
 }) {
   const [isOpen, setOpen] = useState(false);
   const [isFocused, setFocus] = useState(false);
+  const buttonRef = useRef();
+
   return (
     <div
       className="container"
@@ -37,6 +47,7 @@ function CheckboxDropdownComponent({
     >
       <button
         className="display-text-button"
+        ref={buttonRef}
         style={{
           minHeight: '60px',
           display: 'flex',
@@ -46,7 +57,9 @@ function CheckboxDropdownComponent({
           boxShadow: 'none',
           backgroundColor: 'inherit',
           borderRadius: '5px',
-          border: `.5px solid transparent`
+          border: `.5px solid transparent`,
+          padding: '0',
+          margin: '0'
         }}
         onClick={() => {
           setOpen(!isOpen);
@@ -71,11 +84,23 @@ function CheckboxDropdownComponent({
           {isOpen ? openIcon : closeIcon}
         </div>
       </button>
+      <Options isOpen={isOpen}>
+        {initOptions(options).map((option, index) => (
+          <Option
+            index={index}
+            option={option}
+            onChange={onChange}
+            onDeselectOption={onDeselectOption}
+            Checkbox={
+              <CheckBox isChecked={checkSelectedOption(option, value)} />
+            }
+            isSelected={checkSelectedOption(option, value)}
+          />
+        ))}
+      </Options>
     </div>
   );
 }
-
-export default CheckboxDropdownComponent;
 
 CheckboxDropdownComponent.propTypes = {
   options: PropTypes.arrayOf(
@@ -105,7 +130,7 @@ CheckboxDropdownComponent.propTypes = {
   openIcon: PropTypes.oneOfType([PropTypes.node, PropTypes.element]),
   closeIcon: PropTypes.oneOfType([PropTypes.node, PropTypes.element]),
   isStrict: PropTypes.bool,
-  onDeselectItem: PropTypes.func,
+  onDeselectOption: PropTypes.func,
   displayValues: PropTypes.bool,
   closeAfterSelect: PropTypes.bool
 };
@@ -122,7 +147,10 @@ CheckboxDropdownComponent.defaultProps = {
   openIcon: <img src={upIcon} alt="Arrow Icon pointing up" />,
   closeIcon: <img src={downIcon} alt="Arrow Icon pointing down" />,
   isStrict: true,
-  onDeselectItem() {},
+  onDeselectOption() {},
   displayValues: false,
-  closeAfterSelect: true
+  closeAfterSelect: false
 };
+
+export { createStyles };
+export default CheckboxDropdownComponent;

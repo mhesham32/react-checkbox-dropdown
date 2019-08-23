@@ -5,7 +5,7 @@ function createStyles({
   icon = function({ isOpen, isClosed }) {
     return {};
   },
-  activeOption = function({ isMouseIn, isMouseOut, isFocused, isSelected }) {
+  activeOption = function({ isHovered, isFocused, isSelected }) {
     return {};
   },
   options = function({ isOpen, isClosed }) {
