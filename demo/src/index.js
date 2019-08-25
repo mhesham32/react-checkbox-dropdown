@@ -19,13 +19,15 @@ function Demo() {
       options={options}
       onChange={option => {
         if (!checkboxValue.includes(option)) {
-          setValue(state => state.push(option));
+          const newValue = [...checkboxValue, option];
+          setValue(newValue);
         }
       }}
       onDeselectOption={option => {
-        setValue(state => {
-          state = state.filter(item => item.value === option.value);
-        });
+        const filteredOptions = checkboxValue.filter(
+          item => item.value !== option.value
+        );
+        setValue(filteredOptions);
       }}
       value={checkboxValue}
     />

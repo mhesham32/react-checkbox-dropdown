@@ -7,8 +7,7 @@ import CheckBox from './components/Checkbox';
 
 import initOptions from './helpers/initOptions';
 import checkSelectedOption from './helpers/checkSelectedOption';
-import upIcon from './assets/upIcon.svg';
-import downIcon from './assets/downIcon.svg';
+import { UpIcon, DownIcon } from './icons';
 import createStyles from './createStyles';
 
 function CheckboxDropdownComponent({
@@ -87,6 +86,7 @@ function CheckboxDropdownComponent({
       <Options isOpen={isOpen}>
         {initOptions(options).map((option, index) => (
           <Option
+            key={option.key}
             index={index}
             option={option}
             onChange={onChange}
@@ -144,8 +144,8 @@ CheckboxDropdownComponent.defaultProps = {
     activeOption: function() {},
     options: function() {}
   },
-  openIcon: <img src={upIcon} alt="Arrow Icon pointing up" />,
-  closeIcon: <img src={downIcon} alt="Arrow Icon pointing down" />,
+  openIcon: <UpIcon />,
+  closeIcon: <DownIcon />,
   isStrict: true,
   onDeselectOption() {},
   displayValues: false,

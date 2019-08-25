@@ -2,7 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 const Options = ({ isOpen, children, styleFunc }) => {
-  const dynamicHeight = children.length * 50 + 70;
   return (
     <div
       className="options"

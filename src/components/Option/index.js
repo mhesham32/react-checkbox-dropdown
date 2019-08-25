@@ -28,12 +28,6 @@ const Option = ({
       onBlur={() => {
         setFocus(false);
       }}
-      onClick={() => {
-        onChange(option);
-        if (isSelected) {
-          onDeselectOption(option);
-        }
-      }}
       style={{
         fontSize: '18px',
         display: 'flex',
@@ -41,6 +35,8 @@ const Option = ({
         paddingLeft: '22px',
         height: '50px',
         borderBottom: '.5px solid #A39A9A',
+        fontWeight: isSelected ? 'bold' : 'normal',
+        cursor: 'pointer',
         ...styleFunc({ isSelected, isFocused, isHovered })
       }}
     >
@@ -50,6 +46,12 @@ const Option = ({
         style={{ display: 'none' }}
         value={isSelected}
         checked={isSelected}
+        onChange={() => {
+          onChange(option);
+          if (isSelected) {
+            onDeselectOption(option);
+          }
+        }}
       />
       {Checkbox}
       <p>{option.label}</p>
