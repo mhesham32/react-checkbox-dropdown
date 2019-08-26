@@ -27,11 +27,22 @@ function CheckboxDropdownComponent({
 }) {
   const [isOpen, setOpen] = useState(false);
   const [isFocused, setFocus] = useState(false);
-  const buttonRef = useRef();
+  const containerRef = useRef(false);
+
+  // close the dropdown when clicking away
+  if (isOpen && containerRef) {
+    document.onclick = function onClickAway(event) {
+      const node = containerRef.current;
+      if (node && !node.contains(event.target)) {
+        setOpen(false);
+      }
+    };
+  }
 
   return (
     <div
       className="container"
+      ref={containerRef}
       style={{
         width: '100%',
         maxWidth: '570px',
@@ -46,7 +57,6 @@ function CheckboxDropdownComponent({
     >
       <button
         className="display-text-button"
-        ref={buttonRef}
         style={{
           minHeight: '60px',
           display: 'flex',
@@ -78,7 +88,12 @@ function CheckboxDropdownComponent({
         </h3>
         <div
           className="icon"
-          style={{ height: '24px', width: '24px', marginRight: '10px' }}
+          style={{
+            height: '24px',
+            width: '24px',
+            marginRight: '10px',
+            color: 'red'
+          }}
         >
           {isOpen ? openIcon : closeIcon}
         </div>
