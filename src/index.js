@@ -4,10 +4,12 @@ import PropTypes from 'prop-types';
 import Options from './components/Options';
 import Option from './components/Option';
 import CheckBox from './components/Checkbox';
+import Tags from './components/Tags';
+import Tag from './components/Tag';
 
 import initOptions from './helpers/initOptions';
 import checkSelectedOption from './helpers/checkSelectedOption';
-import { UpIcon, DownIcon } from './icons';
+import { UpIcon, DownIcon, XIcon } from './icons';
 import createStyles from './createStyles';
 
 function CheckboxDropdownComponent({
@@ -22,7 +24,7 @@ function CheckboxDropdownComponent({
   closeIcon,
   isStrict,
   onDeselectOption,
-  displayValues,
+  displayTags,
   closeAfterSelect
 }) {
   const [isOpen, setOpen] = useState(false);
@@ -38,6 +40,11 @@ function CheckboxDropdownComponent({
       }
     };
   }
+
+  const onCloseTag = option => {
+    onChange(option);
+    onDeselectOption(option);
+  };
 
   return (
     <div
@@ -98,6 +105,18 @@ function CheckboxDropdownComponent({
           {isOpen ? openIcon : closeIcon}
         </div>
       </button>
+      {displayTags && (
+        <Tags>
+          {value.map(option => (
+            <Tag
+              key={`tag-${option.value}`}
+              option={option}
+              icon={<XIcon />}
+              onDeselect={onCloseTag}
+            />
+          ))}
+        </Tags>
+      )}
       <Options isOpen={isOpen}>
         {initOptions(options).map((option, index) => (
           <Option
@@ -146,7 +165,7 @@ CheckboxDropdownComponent.propTypes = {
   closeIcon: PropTypes.oneOfType([PropTypes.node, PropTypes.element]),
   isStrict: PropTypes.bool,
   onDeselectOption: PropTypes.func,
-  displayValues: PropTypes.bool,
+  displayTags: PropTypes.bool,
   closeAfterSelect: PropTypes.bool
 };
 
@@ -163,7 +182,7 @@ CheckboxDropdownComponent.defaultProps = {
   closeIcon: <DownIcon />,
   isStrict: true,
   onDeselectOption() {},
-  displayValues: false,
+  displayTags: false,
   closeAfterSelect: false
 };
 

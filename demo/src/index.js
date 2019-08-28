@@ -30,6 +30,7 @@ function Demo() {
         setValue(filteredOptions);
       }}
       value={checkboxValue}
+      displayTags
     />
   );
 }

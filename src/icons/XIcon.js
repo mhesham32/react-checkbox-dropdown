@@ -19,5 +19,4 @@ const XIcon = () => {
   );
 };
 
-export default XIcon;
-<div />;
+export { XIcon };
