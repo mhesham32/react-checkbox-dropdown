@@ -16,22 +16,26 @@ const AddAnother = ({ checkAddedValue, addIcon, onAddValue }) => {
     }
   };
 
-  const handleAddValue = value => {
+  const handleAddValue = () => {
+    // add if value accepted and ignore if not
+    if (checkAddedValue(value)) {
+      onAddValue(value);
+      setSuccess(true);
+      setValue('');
+      setShowInput(false);
+    } else {
+      setSuccess(false);
+    }
+  };
+
+  const handleClickAddButton = () => {
     if (showInput) {
       // ignore if there is no value
       if (!value) {
         setSuccess(false);
         return;
       }
-      // add if value accepted and ignore if not
-      if (checkAddedValue(value)) {
-        onAddValue(value);
-        setSuccess(true);
-        setValue('');
-        setShowInput(false);
-      } else {
-        setSuccess(false);
-      }
+      handleAddValue();
     }
   };
   return (
@@ -49,9 +53,7 @@ const AddAnother = ({ checkAddedValue, addIcon, onAddValue }) => {
     >
       <button
         className="add-icon"
-        onClick={() => {
-          handleAddValue(value);
-        }}
+        onClick={handleClickAddButton}
         style={{
           height: '20px',
           width: '20px',
@@ -71,6 +73,7 @@ const AddAnother = ({ checkAddedValue, addIcon, onAddValue }) => {
         onChange={onChange}
         showInput={showInput}
         error={isSuccess === false}
+        onSubmit={handleAddValue}
       />
     </div>
   );
