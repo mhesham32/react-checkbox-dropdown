@@ -52,13 +52,12 @@ Input.propTypes = {
   value: PropTypes.string.isRequired,
   onChange: PropTypes.func.isRequired,
   showInput: PropTypes.bool.isRequired,
-  placeholder: PropTypes.string,
+  placeholder: PropTypes.string.isRequired,
   error: PropTypes.bool,
   onSubmit: PropTypes.func.isRequired
 };
 
 Input.defaultProps = {
-  placeholder: 'Add Another Value',
   error: false
 };
 

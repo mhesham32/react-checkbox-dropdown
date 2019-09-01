@@ -2,7 +2,12 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import Input from './Input';
 
-const AddAnother = ({ checkAddedValue, addIcon, onAddValue }) => {
+const AddAnother = ({
+  checkAddedValue,
+  addIcon,
+  onAddValue,
+  inputPlaceholder
+}) => {
   const [value, setValue] = useState('');
   const [showInput, setShowInput] = useState(false);
   const [isSuccess, setSuccess] = useState(null);
@@ -74,21 +79,17 @@ const AddAnother = ({ checkAddedValue, addIcon, onAddValue }) => {
         showInput={showInput}
         error={isSuccess === false}
         onSubmit={handleAddValue}
+        placeholder={inputPlaceholder}
       />
     </div>
   );
 };
 
 AddAnother.propTypes = {
-  checkAddedValue: PropTypes.func,
+  checkAddedValue: PropTypes.func.isRequired,
   addIcon: PropTypes.oneOf(PropTypes.element, PropTypes.node),
-  onAddValue: PropTypes.func.isRequired
-};
-
-AddAnother.defaultProps = {
-  checkAddedValue() {
-    return true;
-  }
+  onAddValue: PropTypes.func.isRequired,
+  inputPlaceholder: PropTypes.string.isRequired
 };
 
 export default AddAnother;

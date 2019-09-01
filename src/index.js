@@ -20,6 +20,7 @@ function CheckboxDropdownComponent({
   onChange,
   onOpen,
   onClose,
+  checkAddedValue,
   style,
   openIcon,
   closeIcon,
@@ -28,7 +29,7 @@ function CheckboxDropdownComponent({
   isStrict,
   onDeselectOption,
   displayTags,
-  closeAfterSelect
+  inputPlaceholder
 }) {
   const [isOpen, setOpen] = useState(false);
   const [isFocused, setFocus] = useState(false);
@@ -49,6 +50,14 @@ function CheckboxDropdownComponent({
       document.removeEventListener('click', onClickAway);
     }
   }, [isOpen, containerRef]);
+
+  useEffect(() => {
+    if (isOpen) {
+      onOpen();
+    } else {
+      onClose();
+    }
+  }, [isOpen]);
 
   const onCloseTag = option => {
     onChange(option);
@@ -146,7 +155,12 @@ function CheckboxDropdownComponent({
           />
         ))}
         {!isStrict && (
-          <AddAnother onAddValue={onAddAnother} addIcon={addIcon} />
+          <AddAnother
+            onAddValue={onAddAnother}
+            addIcon={addIcon}
+            checkAddedValue={checkAddedValue}
+            inputPlaceholder={inputPlaceholder}
+          />
         )}
       </Options>
     </div>
@@ -157,7 +171,7 @@ CheckboxDropdownComponent.propTypes = {
   options: PropTypes.arrayOf(
     PropTypes.objectOf({
       label: PropTypes.string,
-      value: PropTypes.string
+      value: PropTypes.any
     })
   ).isRequired,
   value: PropTypes.arrayOf(
@@ -170,6 +184,7 @@ CheckboxDropdownComponent.propTypes = {
   onChange: PropTypes.func.isRequired,
   onOpen: PropTypes.func,
   onClose: PropTypes.func,
+  checkAddedValue: PropTypes.func,
   style: PropTypes.objectOf({
     checkboxBody: PropTypes.func,
     icon: PropTypes.func,
@@ -183,12 +198,15 @@ CheckboxDropdownComponent.propTypes = {
   isStrict: PropTypes.bool,
   onDeselectOption: PropTypes.func,
   displayTags: PropTypes.bool,
-  closeAfterSelect: PropTypes.bool
+  inputPlaceholder: PropTypes.string
 };
 
 CheckboxDropdownComponent.defaultProps = {
   onOpen() {},
   onClose() {},
+  checkAddedValue() {
+    return true;
+  },
   style: {
     checkboxBody: function() {},
     icon: function() {},
@@ -202,7 +220,7 @@ CheckboxDropdownComponent.defaultProps = {
   isStrict: true,
   onDeselectOption() {},
   displayTags: false,
-  closeAfterSelect: false
+  inputPlaceholder: 'Add Another Value'
 };
 
 export { createStyles };
