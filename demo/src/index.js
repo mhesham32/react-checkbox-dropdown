@@ -9,7 +9,7 @@ const options = [
   'Summer Smith',
   'Alien Rick',
   'Alien Morty'
-].map(item => ({ key: item, value: item, label: item }));
+].map(item => ({ value: item, label: item }));
 
 function Demo() {
   const [checkboxValue, setValue] = useState([]);
@@ -31,6 +31,7 @@ function Demo() {
       }}
       value={checkboxValue}
       displayTags
+      isStrict={false}
     />
   );
 }

@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import PropTypes from 'prop-types';
 
 import Options from './components/Options';
@@ -6,10 +6,11 @@ import Option from './components/Option';
 import CheckBox from './components/Checkbox';
 import Tags from './components/Tags';
 import Tag from './components/Tag';
+import AddAnother from './components/AddAnother';
 
 import initOptions from './helpers/initOptions';
 import checkSelectedOption from './helpers/checkSelectedOption';
-import { UpIcon, DownIcon, XIcon } from './icons';
+import { UpIcon, DownIcon, XIcon, AddIcon } from './icons';
 import createStyles from './createStyles';
 
 function CheckboxDropdownComponent({
@@ -22,6 +23,8 @@ function CheckboxDropdownComponent({
   style,
   openIcon,
   closeIcon,
+  tagXIcon,
+  addIcon,
   isStrict,
   onDeselectOption,
   displayTags,
@@ -31,19 +34,30 @@ function CheckboxDropdownComponent({
   const [isFocused, setFocus] = useState(false);
   const containerRef = useRef(false);
 
-  // close the dropdown when clicking away
-  if (isOpen && containerRef) {
-    document.onclick = function onClickAway(event) {
+  useEffect(() => {
+    // close the dropdown when clicking away
+    function onClickAway(event) {
       const node = containerRef.current;
       if (node && !node.contains(event.target)) {
         setOpen(false);
       }
-    };
-  }
+    }
+
+    if (isOpen && containerRef) {
+      document.addEventListener('click', onClickAway);
+    } else {
+      document.removeEventListener('click', onClickAway);
+    }
+  }, [isOpen, containerRef]);
 
   const onCloseTag = option => {
     onChange(option);
     onDeselectOption(option);
+  };
+
+  const onAddAnother = value => {
+    const newOption = { label: value, value };
+    onChange(newOption);
   };
 
   return (
@@ -111,7 +125,7 @@ function CheckboxDropdownComponent({
             <Tag
               key={`tag-${option.value}`}
               option={option}
-              icon={<XIcon />}
+              icon={tagXIcon}
               onDeselect={onCloseTag}
             />
           ))}
@@ -120,7 +134,7 @@ function CheckboxDropdownComponent({
       <Options isOpen={isOpen}>
         {initOptions(options).map((option, index) => (
           <Option
-            key={option.key}
+            key={`option-${option.value}`}
             index={index}
             option={option}
             onChange={onChange}
@@ -131,6 +145,9 @@ function CheckboxDropdownComponent({
             isSelected={checkSelectedOption(option, value)}
           />
         ))}
+        {!isStrict && (
+          <AddAnother onAddValue={onAddAnother} addIcon={addIcon} />
+        )}
       </Options>
     </div>
   );
@@ -138,15 +155,13 @@ function CheckboxDropdownComponent({
 
 CheckboxDropdownComponent.propTypes = {
   options: PropTypes.arrayOf(
-    PropTypes.shape({
-      key: PropTypes.any,
+    PropTypes.objectOf({
       label: PropTypes.string,
       value: PropTypes.string
     })
   ).isRequired,
   value: PropTypes.arrayOf(
-    PropTypes.shape({
-      key: PropTypes.any,
+    PropTypes.objectOf({
       label: PropTypes.string,
       value: PropTypes.string
     })
@@ -163,6 +178,8 @@ CheckboxDropdownComponent.propTypes = {
   }),
   openIcon: PropTypes.oneOfType([PropTypes.node, PropTypes.element]),
   closeIcon: PropTypes.oneOfType([PropTypes.node, PropTypes.element]),
+  tagXIcon: PropTypes.oneOfType([PropTypes.node, PropTypes.element]),
+  addIcon: PropTypes.oneOfType([PropTypes.node, PropTypes.element]),
   isStrict: PropTypes.bool,
   onDeselectOption: PropTypes.func,
   displayTags: PropTypes.bool,
@@ -180,6 +197,8 @@ CheckboxDropdownComponent.defaultProps = {
   },
   openIcon: <UpIcon />,
   closeIcon: <DownIcon />,
+  tagXIcon: <XIcon />,
+  addIcon: <AddIcon />,
   isStrict: true,
   onDeselectOption() {},
   displayTags: false,

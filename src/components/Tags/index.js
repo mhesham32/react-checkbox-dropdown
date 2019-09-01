@@ -10,7 +10,6 @@ const Tags = ({ children }) => {
         display: 'flex',
         flexWrap: 'wrap',
         padding: '10px 0',
-        // borderBottom: '.5px solid #A39A9A',
         paddingLeft: '22px'
       }}
     >
