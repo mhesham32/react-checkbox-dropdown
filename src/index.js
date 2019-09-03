@@ -6,7 +6,7 @@ import Option from './components/Option';
 import CheckBox from './components/Checkbox';
 import Tags from './components/Tags';
 import Tag from './components/Tag';
-import AddAnother from './components/AddAnother';
+import AddValue from './components/AddValue';
 
 import initOptions from './helpers/initOptions';
 import checkSelectedOption from './helpers/checkSelectedOption';
@@ -34,6 +34,21 @@ function CheckboxDropdownComponent({
   const [isOpen, setOpen] = useState(false);
   const [isFocused, setFocus] = useState(false);
   const containerRef = useRef(false);
+
+  const {
+    container,
+    option: optionStyles,
+    options: optionsStyles,
+    toggleButton,
+    checkboxBody,
+    checkedDot,
+    addValue,
+    addValueButton,
+    addValueInput,
+    displayText: displayTextStyles,
+    tagsContainer,
+    tag
+  } = style;
 
   useEffect(() => {
     // close the dropdown when clicking away
@@ -82,7 +97,8 @@ function CheckboxDropdownComponent({
         borderRadius: '5px',
         backgroundColor: '#fff',
         fontFamily:
-          'SFMono-Regular,Menlo,Monaco,Consolas,"Liberation Mono","Courier New",monospace'
+          'SFMono-Regular,Menlo,Monaco,Consolas,"Liberation Mono","Courier New",monospace',
+        ...container({ isOpen, isFocused })
       }}
     >
       <button
@@ -98,7 +114,8 @@ function CheckboxDropdownComponent({
           borderRadius: '5px',
           border: `.5px solid transparent`,
           padding: '0',
-          margin: '0'
+          margin: '0',
+          ...toggleButton({ isOpen, isFocused })
         }}
         onClick={() => {
           setOpen(!isOpen);
@@ -112,7 +129,12 @@ function CheckboxDropdownComponent({
       >
         <h3
           className="display-text"
-          style={{ paddingLeft: '22px', fontSize: '18px', marginRight: 'auto' }}
+          style={{
+            paddingLeft: '22px',
+            fontSize: '18px',
+            marginRight: 'auto',
+            ...displayTextStyles({ isOpen, isFocused })
+          }}
         >
           {displayText}
         </h3>
@@ -129,18 +151,19 @@ function CheckboxDropdownComponent({
         </div>
       </button>
       {displayTags && (
-        <Tags>
+        <Tags styleFunc={tagsContainer}>
           {value.map(option => (
             <Tag
               key={`tag-${option.value}`}
               option={option}
               icon={tagXIcon}
               onDeselect={onCloseTag}
+              styleFunc={tag}
             />
           ))}
         </Tags>
       )}
-      <Options isOpen={isOpen}>
+      <Options isOpen={isOpen} styleFunc={optionsStyles}>
         {initOptions(options).map((option, index) => (
           <Option
             key={`option-${option.value}`}
@@ -149,17 +172,25 @@ function CheckboxDropdownComponent({
             onChange={onChange}
             onDeselectOption={onDeselectOption}
             Checkbox={
-              <CheckBox isChecked={checkSelectedOption(option, value)} />
+              <CheckBox
+                isChecked={checkSelectedOption(option, value)}
+                checkboxStyle={checkboxBody}
+                checkedStyle={checkedDot}
+              />
             }
             isSelected={checkSelectedOption(option, value)}
+            styleFunc={optionStyles}
           />
         ))}
         {!isStrict && (
-          <AddAnother
+          <AddValue
             onAddValue={onAddAnother}
             addIcon={addIcon}
             checkAddedValue={checkAddedValue}
             inputPlaceholder={inputPlaceholder}
+            styleFunc={addValue}
+            inputStyles={addValueInput}
+            buttonStyles={addValueButton}
           />
         )}
       </Options>
@@ -186,10 +217,18 @@ CheckboxDropdownComponent.propTypes = {
   onClose: PropTypes.func,
   checkAddedValue: PropTypes.func,
   style: PropTypes.objectOf({
+    container: PropTypes.func,
+    option: PropTypes.func,
+    options: PropTypes.func,
+    toggleButton: PropTypes.func,
+    displayText: PropTypes.func,
     checkboxBody: PropTypes.func,
-    icon: PropTypes.func,
-    activeOption: PropTypes.func,
-    options: PropTypes.func
+    checkedDot: PropTypes.func,
+    addValue: PropTypes.func,
+    addValueButton: PropTypes.func,
+    addValueInput: PropTypes.func,
+    tagsContainer: PropTypes.func,
+    tag: PropTypes.func
   }),
   openIcon: PropTypes.oneOfType([PropTypes.node, PropTypes.element]),
   closeIcon: PropTypes.oneOfType([PropTypes.node, PropTypes.element]),
@@ -208,10 +247,42 @@ CheckboxDropdownComponent.defaultProps = {
     return true;
   },
   style: {
-    checkboxBody: function() {},
-    icon: function() {},
-    activeOption: function() {},
-    options: function() {}
+    container: function() {
+      return {};
+    },
+    option: function() {
+      return {};
+    },
+    options: function() {
+      return {};
+    },
+    toggleButton: function() {
+      return {};
+    },
+    displayText: function() {
+      return {};
+    },
+    checkboxBody: function() {
+      return {};
+    },
+    checkedDot: function() {
+      return {};
+    },
+    addValue: function() {
+      return {};
+    },
+    addValueButton: function() {
+      return {};
+    },
+    addValueInput: function() {
+      return {};
+    },
+    tagsContainer: function() {
+      return {};
+    },
+    tag: function() {
+      return {};
+    }
   },
   openIcon: <UpIcon />,
   closeIcon: <DownIcon />,

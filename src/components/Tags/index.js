@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-const Tags = ({ children }) => {
+const Tags = ({ children, styleFunc }) => {
   if (!children.length) return null;
   return (
     <div
@@ -10,7 +10,8 @@ const Tags = ({ children }) => {
         display: 'flex',
         flexWrap: 'wrap',
         padding: '10px 0',
-        paddingLeft: '22px'
+        paddingLeft: '22px',
+        ...styleFunc()
       }}
     >
       {children}
@@ -19,7 +20,8 @@ const Tags = ({ children }) => {
 };
 
 Tags.propTypes = {
-  children: PropTypes.arrayOf(PropTypes.element).isRequired
+  children: PropTypes.arrayOf(PropTypes.element).isRequired,
+  styleFunc: PropTypes.func.isRequired
 };
 
 export default Tags;

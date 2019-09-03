@@ -1,27 +1,63 @@
 function createStyles({
-  checkboxBody = function({ isOpen, isClosed }) {
+  container = function({ isOpen, isFocused }) {
     return {};
   },
-  icon = function({ isOpen, isClosed }) {
+  options = function({ isOpen }) {
     return {};
   },
-  activeOption = function({ isHovered, isFocused, isSelected }) {
+  option = function({ isHovered, isFocused, isSelected }) {
     return {};
   },
-  options = function({ isOpen, isClosed }) {
+  toggleButton = function({ isOpen, isFocused }) {
+    return {};
+  },
+  displayText = function({ isOpen, isFocused }) {
+    return {};
+  },
+  checkboxBody = function({ isChecked, isHovered }) {
+    return {};
+  },
+  checkboxDot = function() {
+    return {};
+  },
+  addValue = function({ isInputShown, isSuccess }) {
+    return {};
+  },
+  addValueButton = function({ isInputShown, isSuccess }) {
+    return {};
+  },
+  addValueInput = function({ isFocused, isSuccess }) {
+    return {};
+  },
+  tagsContainer = function() {
+    return {};
+  },
+  tag = function({ isHovered }) {
     return {};
   }
 }) {
   const fakeState = {
     isOpen: false,
     isClosed: true,
-    isMouseIn: false,
-    isMouseOut: true,
+    isHovered: false,
     isFocused: false,
     isSelected: true
   };
   const theStylesObject = arguments[0];
-  const methodNames = ['checkboxBody', 'icon', 'activeOption', 'options'];
+  const methodNames = [
+    'container',
+    'options',
+    'option',
+    'toggleButton',
+    'displayText',
+    'checkboxBody',
+    'checkboxDot',
+    'addValue',
+    'addValueButton',
+    'addValueInput',
+    'tagsContainer',
+    'tag'
+  ];
   for (let method in theStylesObject) {
     // checking for the styles object method names
     if (!methodNames.includes(method)) {
@@ -43,10 +79,18 @@ function createStyles({
     }
   }
   return {
+    container,
+    options,
+    option,
+    toggleButton,
+    displayText,
     checkboxBody,
-    icon,
-    activeOption,
-    options
+    checkboxDot,
+    addValue,
+    addValueButton,
+    addValueInput,
+    tagsContainer,
+    tag
   };
 }
 

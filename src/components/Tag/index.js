@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { useState } from 'react';
 
-const Tag = ({ option, onDeselect, icon, isFirst }) => {
+const Tag = ({ option, onDeselect, icon, styleFunc }) => {
+  const [isHovered, setHover] = useState(false);
   return (
     <div
       className="tag"
@@ -12,7 +13,14 @@ const Tag = ({ option, onDeselect, icon, isFirst }) => {
         backgroundColor: '#C4C4C4',
         color: '#2D2626',
         fontSize: '12px',
-        padding: '4px'
+        padding: '4px',
+        ...styleFunc({ isHovered })
+      }}
+      onMouseEnter={() => {
+        setHover(true);
+      }}
+      onMouseLeave={() => {
+        setHover(false);
       }}
     >
       <p

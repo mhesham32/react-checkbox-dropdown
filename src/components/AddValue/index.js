@@ -2,11 +2,14 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import Input from './Input';
 
-const AddAnother = ({
+const AddValue = ({
   checkAddedValue,
   addIcon,
   onAddValue,
-  inputPlaceholder
+  inputPlaceholder,
+  styleFunc,
+  inputStyles,
+  buttonStyles
 }) => {
   const [value, setValue] = useState('');
   const [showInput, setShowInput] = useState(false);
@@ -53,7 +56,8 @@ const AddAnother = ({
         height: '65px',
         paddingLeft: '20px',
         fontSize: '18px',
-        color: '#989898'
+        color: '#989898',
+        ...styleFunc({ isSuccess, isInputShown: showInput })
       }}
     >
       <button
@@ -68,7 +72,8 @@ const AddAnother = ({
           padding: '0',
           border: 'none',
           boxShadow: 'none',
-          outline: 'none'
+          outline: 'none',
+          ...buttonStyles({ isSuccess, isInputShown: showInput })
         }}
       >
         {addIcon}
@@ -77,19 +82,23 @@ const AddAnother = ({
         value={value}
         onChange={onChange}
         showInput={showInput}
-        error={isSuccess === false}
+        isSuccess={isSuccess}
         onSubmit={handleAddValue}
         placeholder={inputPlaceholder}
+        styleFunc={inputStyles}
       />
     </div>
   );
 };
 
-AddAnother.propTypes = {
+AddValue.propTypes = {
   checkAddedValue: PropTypes.func.isRequired,
   addIcon: PropTypes.oneOf(PropTypes.element, PropTypes.node),
   onAddValue: PropTypes.func.isRequired,
-  inputPlaceholder: PropTypes.string.isRequired
+  inputPlaceholder: PropTypes.string.isRequired,
+  styleFunc: PropTypes.func.isRequired,
+  inputStyles: PropTypes.func.isRequired,
+  buttonStyles: PropTypes.func.isRequired
 };
 
-export default AddAnother;
+export default AddValue;

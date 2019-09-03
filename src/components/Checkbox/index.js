@@ -18,13 +18,19 @@ const Checkbox = ({ isChecked, checkboxStyle, checkedStyle }) => {
         marginRight: '20px',
         display: 'flex',
         alignItems: 'center',
-        justifyContent: 'center'
+        justifyContent: 'center',
+        ...checkboxStyle({ isChecked, isHovered })
       }}
     >
       {isChecked && (
         <div
           className="checked"
-          style={{ width: '60%', height: '60%', backgroundColor: '#A39A9A' }}
+          style={{
+            width: '60%',
+            height: '60%',
+            backgroundColor: '#A39A9A',
+            ...checkboxStyle()
+          }}
         />
       )}
     </div>

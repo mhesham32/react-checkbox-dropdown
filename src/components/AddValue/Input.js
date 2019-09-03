@@ -6,8 +6,9 @@ const Input = ({
   onChange,
   showInput,
   placeholder,
-  error,
-  onSubmit
+  isSuccess,
+  onSubmit,
+  styleFunc
 }) => {
   const [isFocused, setFocus] = useState(false);
 
@@ -35,13 +36,14 @@ const Input = ({
       style={{
         height: '50px',
         width: '100%',
-        border: `1px solid ${error ? '#dc3545' : '#000'}`,
+        border: `1px solid ${!isSuccess ? '#dc3545' : '#000'}`,
         borderRadius: '12px',
         marginRight: '20px',
         paddingLeft: '10px',
-        fontSize: '18px'
+        fontSize: '18px',
+        ...styleFunc({ isFocused, isSuccess })
       }}
-      placeholder={error ? 'Please enter a valid option' : ''}
+      placeholder={!isSuccess ? 'Please enter a valid option' : ''}
     />
   ) : (
     <p className="placeholder">{placeholder}</p>
@@ -53,12 +55,9 @@ Input.propTypes = {
   onChange: PropTypes.func.isRequired,
   showInput: PropTypes.bool.isRequired,
   placeholder: PropTypes.string.isRequired,
-  error: PropTypes.bool,
-  onSubmit: PropTypes.func.isRequired
-};
-
-Input.defaultProps = {
-  error: false
+  isSuccess: PropTypes.bool.isRequired,
+  onSubmit: PropTypes.func.isRequired,
+  styleFunc: PropTypes.func.isRequired
 };
 
 export default Input;

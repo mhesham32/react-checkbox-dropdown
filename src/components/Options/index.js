@@ -11,7 +11,7 @@ const Options = ({ isOpen, children, styleFunc }) => {
         maxHeight: isOpen ? '650px' : '0',
         overflowY: 'scroll',
         transition: 'all .3s ease-in-out',
-        ...styleFunc()
+        ...styleFunc({ isOpen })
       }}
     >
       {children}
