@@ -1,7 +1,7 @@
 {
-  "name": "checkbox-dropdown-component",
+  "name": "react-checkbox-dropdown",
   "version": "1.0.0",
-  "description": "checkbox-dropdown-component React component",
+  "description": "flex checkbox-dropdown React component",
   "main": "lib/index.js",
   "module": "es/index.js",
   "files": [
@@ -37,10 +37,10 @@
     "react-dom": "^16.9.0",
     "react-test-renderer": "^16.9.0"
   },
-  "author": "",
+  "author": "Mostafa Hesham",
   "homepage": "",
   "license": "MIT",
-  "repository": "",
+  "repository": "https://github.com/mhesham32/react-checkbox-dropdown",
   "keywords": [
     "react-component",
     "checkbox-react-dropdown-component",
