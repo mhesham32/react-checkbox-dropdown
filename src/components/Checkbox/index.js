@@ -29,7 +29,7 @@ const Checkbox = ({ isChecked, checkboxStyle, checkedStyle }) => {
             width: '60%',
             height: '60%',
             backgroundColor: '#A39A9A',
-            ...checkboxStyle()
+            ...checkedStyle()
           }}
         />
       )}

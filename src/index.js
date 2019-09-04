@@ -41,7 +41,7 @@ function CheckboxDropdownComponent({
     options: optionsStyles,
     toggleButton,
     checkboxBody,
-    checkedDot,
+    checkboxDot,
     addValue,
     addValueButton,
     addValueInput,
@@ -144,6 +144,7 @@ function CheckboxDropdownComponent({
             height: '24px',
             width: '24px',
             marginRight: '10px',
+            marginLeft: '10px',
             color: 'red'
           }}
         >
@@ -175,7 +176,7 @@ function CheckboxDropdownComponent({
               <CheckBox
                 isChecked={checkSelectedOption(option, value)}
                 checkboxStyle={checkboxBody}
-                checkedStyle={checkedDot}
+                checkedStyle={checkboxDot}
               />
             }
             isSelected={checkSelectedOption(option, value)}
@@ -223,7 +224,7 @@ CheckboxDropdownComponent.propTypes = {
     toggleButton: PropTypes.func,
     displayText: PropTypes.func,
     checkboxBody: PropTypes.func,
-    checkedDot: PropTypes.func,
+    checkboxDot: PropTypes.func,
     addValue: PropTypes.func,
     addValueButton: PropTypes.func,
     addValueInput: PropTypes.func,
@@ -265,7 +266,7 @@ CheckboxDropdownComponent.defaultProps = {
     checkboxBody: function() {
       return {};
     },
-    checkedDot: function() {
+    checkboxDot: function() {
       return {};
     },
     addValue: function() {

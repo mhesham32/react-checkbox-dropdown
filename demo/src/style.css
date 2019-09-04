@@ -1,7 +1,8 @@
 #demo {
   display: flex;
-  justify-content: center;
+  justify-content: space-evenly;
   padding-top: 200px;
+  width: 100vw;
 }
 
 body {
